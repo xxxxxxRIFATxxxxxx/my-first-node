@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('Hello from node');
@@ -28,6 +29,14 @@ app.get('/users', (req, res) => {
     else {
         res.send(users);
     };
+});
+
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    newUser.id = users.length;
+    users.push(newUser);
+    console.log("Post Hitted", req.body);
+    res.json(newUser)
 });
 
 app.get('/users/:id', (req, res) => {
